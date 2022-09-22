@@ -9,11 +9,11 @@ export const commands = [
     			.setDescription('The input to echo back')
     			.setRequired(true)),
     new SlashCommandBuilder()
-    	.setName('echo2')
-    	.setDescription('Replies with your input!')
+    	.setName('userAdd')
+    	.setDescription('Adds a user to the database')
     	.addStringOption(option =>
-    		option.setName('input')
-    			.setDescription('The input to echo back')
+    		option.setName('name')
+    			.setDescription('The name of the user')
     			.setRequired(true)),
 ]
 .map(command => command.toJSON());
