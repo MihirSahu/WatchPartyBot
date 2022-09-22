@@ -8,7 +8,7 @@ export default (client: Client): void => {
         }
         console.log(`${client.user.username} is online`);
 
-        await mongoose.connect('mongodb://localhost:27017/test');
+        await mongoose.connect('mongodb://localhost:27017/WatchParty');
         console.log("Connected to database");
     });
 };
