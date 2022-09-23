@@ -2,7 +2,7 @@ const { Client, ClientOptions, REST, SlashCommandBuilder, Routes, ChatInputComma
 import * as dotenv from 'dotenv';
 import ready from './ready';
 import { commands } from './commands';
-import { userAdd } from './util';
+import { userAdd, userDel } from './util';
 
 dotenv.config();
 
@@ -35,7 +35,12 @@ client.on('interactionCreate', async (interaction: any) => {
                 await interaction.reply("pong");
                 break;
             case 'userAdd':
-                await userAdd("Mihir");
+                userAdd("Mihir");
                 await interaction.reply("User added!");
+                break;
+            case 'userDel':
+                userDel("Mihir");
+                await interaction.reply("User added!");
+                break;
         }
 });

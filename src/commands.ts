@@ -16,4 +16,11 @@ export const commands = [
     		option.setName('name')
     			.setDescription('The name of the user')
     			.setRequired(true)),
+    new SlashCommandBuilder()
+    	.setName('userdel')
+    	.setDescription('Deletes a user from the database')
+    	.addStringOption(option =>
+    		option.setName('name')
+    			.setDescription('The name of the user')
+    			.setRequired(true)),
 ];
