@@ -8,6 +8,13 @@ export default (client: Client): void => {
         }
         console.log(`${client.user.username} is online`);
 
-        mongoose.connect('mongodb://localhost:27017/WatchParty', () => console.log("Connected to database"));
+        mongoose.connect('mongodb://localhost:27017/WatchParty')
+            .then(() => {
+                console.log(`CONNECTED TO MONGO!`);
+            })
+            .catch((err) => {
+                console.log(`OH NO! MONGO CONNECTION ERROR!`);
+                console.log(err);
+        })
     });
 };

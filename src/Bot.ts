@@ -31,16 +31,20 @@ client.on('interactionCreate', async (interaction: any) => {
         let message;
         switch(commandName){
             case 'echo':
-                //message = await interaction.fetchReply();
+                message = await interaction.fetchReply();
+                //console.log(message);
                 await interaction.reply("pong");
                 break;
-            case 'userAdd':
-                userAdd("Mihir");
+            case 'useradd':
+                message = await interaction.fetchReply();
+                console.log(message);
+                //await userAdd(message);
                 await interaction.reply("User added!");
                 break;
-            case 'userDel':
-                userDel("Mihir");
-                await interaction.reply("User added!");
+            case 'userdel':
+                message = await interaction.fetchReply();
+                await userDel(message);
+                await interaction.reply("User deleted!");
                 break;
         }
 });
