@@ -30,19 +30,13 @@ client.on('interactionCreate', async (interaction: any) => {
         const { commandName } = interaction;
         let message;
         switch(commandName){
-            case 'echo':
-                message = await interaction.fetchReply();
-                //console.log(message);
-                await interaction.reply("pong");
-                break;
             case 'useradd':
-                message = await interaction.fetchReply();
-                console.log(message);
-                //await userAdd(message);
+                message = await interaction.options.getString("name");
+                await userAdd(message, new Date);
                 await interaction.reply("User added!");
                 break;
             case 'userdel':
-                message = await interaction.fetchReply();
+                message = await interaction.options.getString("name");
                 await userDel(message);
                 await interaction.reply("User deleted!");
                 break;
