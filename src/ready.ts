@@ -1,5 +1,9 @@
 import { Client } from "discord.js";
 import mongoose from 'mongoose';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
+const mongo_uri = process.env.MONGO_URI;
 
 export default (client: Client): void => {
     client.on("ready", async () => {
@@ -8,7 +12,7 @@ export default (client: Client): void => {
         }
         console.log(`${client.user.username} is online`);
 
-        mongoose.connect('mongodb://localhost:27017/WatchParty')
+        mongoose.connect(mongo_uri ? mongo_uri : "")
             .then(() => {
                 console.log(`CONNECTED TO MONGO!`);
             })
