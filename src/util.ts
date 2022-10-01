@@ -1,17 +1,45 @@
-import { user, event } from './schema';
+import { user, event, anime } from './schema';
 import mongoose from 'mongoose';
 import { EmbedBuilder } from 'discord.js';
 import internal from 'stream';
+import { start } from 'repl';
 
 const User = mongoose.model('User', user);
 const Event = mongoose.model('Event', event);
+const Anime = mongoose.model('Anime', anime);
 
-// Objects
-interface Anime {
-    name: string;
-    seasons: number;
-    startDate: Date;
-    endDate: Date;
+// Find Function
+export const userSearch = async (name?: string, registerDate?: Date) => {
+    if (name !== undefined) {
+        return User.where('name').equals(name);
+    }
+    if (registerDate !== undefined) {
+        return User.where('registerDate').equals(registerDate);
+    }
+}
+
+export const animeSearch = async (name?: string, seasons?: number, startDate?: Date, endDate?: Date) => {
+    if (name !== undefined) {
+        return Anime.where('name').equals(name);
+    }
+    if (seasons !== undefined) {
+        return Anime.where('seasons').equals(seasons);
+    }
+    if (startDate !== undefined) {
+        return Anime.where('startDate').equals(startDate);
+    }
+    if (endDate !== undefined) {
+        return Anime.where('endDate').equals(endDate);
+    }
+}
+
+export const eventSearch = async (name?: String, date?: Date) => {
+    if (name !== undefined) {
+        return Event.where('name').equals(name);
+    }
+    if (date !== undefined) {
+        return Event.where('date').equals(date);
+    }
 }
 
 // User Functions
@@ -34,6 +62,20 @@ export const userMod = async (name?: string, newName?: string, date?: Date, newD
 export const userDel = async (name: string) => {
     await User.deleteOne({ name: name });
     console.log(`Deleted ${name} from database.`);
+}
+
+// Anime Functions
+export const animeAdd = async (name: string, seasons: number, startDate: Date, endDate: Date) => {
+    const newAnime = new Anime({ name: name, seasons: seasons, startDate: startDate, endDate: endDate})
+    newAnime.save((err, doc) => {
+        err ? console.log(err) : console.log(`Added ${name} to database with id ${doc._id}`);
+    })
+}
+
+export const animeMod = async (name: string, seasons: number, startDate: Date, endDate: Date) => {
+}
+
+export const animeDel = async (name: string, seasons: number, startDate: Date, endDate: Date) => {
 }
 
 // Event Functions
