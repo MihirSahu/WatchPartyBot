@@ -8,6 +8,23 @@ const User = mongoose.model('User', user);
 const Event = mongoose.model('Event', event);
 const Anime = mongoose.model('Anime', anime);
 
+interface user {
+    name: string;
+    registerDate: Date;
+}
+
+interface anime {
+    name: string;
+    seasons: number;
+    startDate: Date;
+    endDate: Date;
+}
+
+interface event {
+    name: String;
+    date: Date;
+}
+
 // Find Function
 export const userSearch = async (name?: string, registerDate?: Date) => {
     if (name !== undefined) {
@@ -43,8 +60,8 @@ export const eventSearch = async (name?: String, date?: Date) => {
 }
 
 // User Functions
-export const userAdd = async (name: string, registerDate: Date) => {
-    const newUser = new User({ name: name, registerDate: registerDate });
+export const userAdd = async (user: user) => {
+    const newUser = new User({ name: user.name, registerDate: user.registerDate });
     newUser.save((err, doc) => {
         err ? console.log(err) : console.log(`Added ${name} to database with id ${doc._id}`);
     });
@@ -65,8 +82,8 @@ export const userDel = async (name: string) => {
 }
 
 // Anime Functions
-export const animeAdd = async (name: string, seasons: number, startDate: Date, endDate: Date) => {
-    const newAnime = new Anime({ name: name, seasons: seasons, startDate: startDate, endDate: endDate})
+export const animeAdd = async (anime: anime) => {
+    const newAnime = new Anime({ name: anime.name, seasons: anime.seasons, startDate: anime.startDate, endDate: anime.endDate})
     newAnime.save((err, doc) => {
         err ? console.log(err) : console.log(`Added ${name} to database with id ${doc._id}`);
     })
@@ -79,8 +96,8 @@ export const animeDel = async (name: string, seasons: number, startDate: Date, e
 }
 
 // Event Functions
-export const eventAdd = async (name: String, date: Date) => {
-    const newEvent = new Event({ name: name, date: date });
+export const eventAdd = async (event: event) => {
+    const newEvent = new Event({ name: event.name, date: event.date });
     newEvent.save((err, doc) => {
         err ? console.log(err) : console.log(`Added ${name} to database with id ${doc._id}`);
     });
