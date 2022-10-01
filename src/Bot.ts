@@ -4,6 +4,7 @@ import ready from './ready';
 import { commands } from './commands';
 import { userAdd, userDel, userMod, eventAdd, eventMod, eventDel, poll } from './util';
 import { channel } from 'diagnostics_channel';
+import { getAnimeInfo } from './scraper';
 
 dotenv.config();
 
@@ -67,6 +68,11 @@ client.on('interactionCreate', async (interaction: any) => {
                 break;
             case 'poll':
                 await interaction.reply({ embeds: [poll()] });
+                break;
+            case 'getanimeinfo':
+                message = await interaction.options.getString("myanimelistid");
+                await getAnimeInfo(message);
+                await interaction.reply("Information fetched!");
                 break;
         }
 });

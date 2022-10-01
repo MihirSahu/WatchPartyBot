@@ -60,5 +60,12 @@ export const commands = [
     			.setRequired(true)),
     new SlashCommandBuilder()
     	.setName('poll')
-    	.setDescription('Starts a poll for watch party')
+    	.setDescription('Starts a poll for watch party'),
+    new SlashCommandBuilder()
+    	.setName('getanimeinfo')
+    	.setDescription('Gets data about an anime from MyAnimeList')
+		.addStringOption(option =>
+			option.setName('myanimelistid')
+				.setDescription('The ID of the anime on MyAnimeList')
+				.setRequired(true)),
 ];
