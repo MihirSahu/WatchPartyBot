@@ -1,9 +1,18 @@
 import { user, event } from './schema';
 import mongoose from 'mongoose';
 import { EmbedBuilder } from 'discord.js';
+import internal from 'stream';
 
 const User = mongoose.model('User', user);
 const Event = mongoose.model('Event', event);
+
+// Objects
+interface Anime {
+    name: string;
+    seasons: number;
+    startDate: Date;
+    endDate: Date;
+}
 
 // User Functions
 export const userAdd = async (name: string, registerDate: Date) => {
