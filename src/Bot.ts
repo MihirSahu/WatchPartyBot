@@ -2,7 +2,7 @@ const { Client, ClientOptions, REST, SlashCommandBuilder, Routes, ChatInputComma
 import * as dotenv from 'dotenv';
 import ready from './ready';
 import { commands } from './commands';
-import { userAdd, userDel, userMod, eventAdd, eventMod, eventDel, poll } from './util';
+import { user, anime, event, userAdd, userDel, userMod, eventAdd, eventMod, eventDel, poll } from './util';
 import { channel } from 'diagnostics_channel';
 import { getAnimeInfo } from './scraper';
 
@@ -34,7 +34,8 @@ client.on('interactionCreate', async (interaction: any) => {
         switch(commandName){
             case 'useradd':
                 message = await interaction.options.getString("name");
-                await userAdd(message, new Date);
+                let user: user = { name: message, registerDate: new Date};
+                await userAdd(user);
                 await interaction.reply("User added!");
                 break;
             case 'usermod':
@@ -51,7 +52,8 @@ client.on('interactionCreate', async (interaction: any) => {
                 break;
             case 'eventadd':
                 message = await interaction.options.getString("name");
-                await eventAdd(message, new Date);
+                let event: event = { name: message, date: new Date};
+                await eventAdd(event);
                 await interaction.reply("Event added!");
                 break;
             case 'eventmod':
@@ -66,13 +68,20 @@ client.on('interactionCreate', async (interaction: any) => {
                 await eventDel(message);
                 await interaction.reply("Event deleted!");
                 break;
-            case 'poll':
-                await interaction.reply({ embeds: [poll()] });
-                break;
             case 'getanimeinfo':
                 message = await interaction.options.getString("myanimelistid");
                 await getAnimeInfo(message);
                 await interaction.reply("Information fetched!");
+                break;
+            case 'poll':
+                message = [];
+                let temp = "";
+                for (let i = 1; i <= 5; i++) {
+                    temp = await interaction.options.getString(`anime${i}`)
+                    if (temp == undefined) { break; };
+                    message.push(temp);
+                }
+                await interaction.reply({ embeds: [ await poll(message)] });
                 break;
         }
 });

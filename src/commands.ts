@@ -59,13 +59,33 @@ export const commands = [
     			.setDescription('The name of the event')
     			.setRequired(true)),
     new SlashCommandBuilder()
-    	.setName('poll')
-    	.setDescription('Starts a poll for watch party'),
-    new SlashCommandBuilder()
     	.setName('getanimeinfo')
     	.setDescription('Gets data about an anime from MyAnimeList')
 		.addStringOption(option =>
 			option.setName('myanimelistid')
 				.setDescription('The ID of the anime on MyAnimeList')
 				.setRequired(true)),
+    new SlashCommandBuilder()
+    	.setName('poll')
+    	.setDescription('Starts a poll for watch party')
+    	.addStringOption(option =>
+    		option.setName('anime1')
+    			.setDescription('The name of the event')
+    			.setRequired(false))
+    	.addStringOption(option =>
+    		option.setName('anime2')
+    			.setDescription('The name of the event')
+    			.setRequired(false))
+    	.addStringOption(option =>
+    		option.setName('anime3')
+    			.setDescription('The name of the event')
+    			.setRequired(false))
+    	.addStringOption(option =>
+    		option.setName('anime4')
+    			.setDescription('The name of the event')
+    			.setRequired(false))
+    	.addStringOption(option =>
+    		option.setName('anime5')
+    			.setDescription('The name of the event')
+    			.setRequired(false)),
 ];

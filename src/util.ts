@@ -1,26 +1,25 @@
 import { user, event, anime } from './schema';
 import mongoose from 'mongoose';
 import { EmbedBuilder } from 'discord.js';
-import internal from 'stream';
-import { start } from 'repl';
+import { getAnimeInfo } from './scraper';
 
 const User = mongoose.model('User', user);
 const Event = mongoose.model('Event', event);
 const Anime = mongoose.model('Anime', anime);
 
-interface user {
+export interface user {
     name: string;
     registerDate: Date;
 }
 
-interface anime {
+export interface anime {
     name: string;
     seasons: number;
     startDate: Date;
     endDate: Date;
 }
 
-interface event {
+export interface event {
     name: String;
     date: Date;
 }
@@ -118,17 +117,36 @@ export const eventDel = async (name: string) => {
 }
 
 // Poll
-export const poll = () => {
-    const exampleEmbed = new EmbedBuilder()
-	    .setColor(0x0099FF)
-	    .setTitle('CougarCS Watch Party Poll')
-	    .addFields(
-	    	{ name: 'Regular field title', value: 'Some value here' },
-	    	{ name: '\u200B', value: '\u200B' },
-	    	{ name: 'Inline field title', value: 'Some value here', inline: true },
-	    	{ name: 'Inline field title', value: 'Some value here', inline: true },
-	    )
-	    .addFields({ name: 'Inline field title', value: 'Some value here', inline: true })
+const field_creator = async (animeId_arr: string[]) => {
+    let fields = [];
 
+    for (let id of animeId_arr) {
+        const data: any = getAnimeInfo(id);
+        console.log(data);
+        fields.push({
+            name: data["data"]["title"],
+            value: data["data"]["source"],
+            inline: true,
+        });
+    }
+
+    return fields;
+}
+export const poll = async (animeId_arr: string[]) => {
+    const exampleEmbed = {
+        color: 0x0099ff,
+	    title: 'CougarCS Watch Party',
+	    author: {
+	    	name: 'CougarCS Watch Party Bot',
+	    	icon_url: 'https://i.imgur.com/AfFp7pu.png',
+	    	url: 'https://discord.js.org',
+	    },
+	    fields: await field_creator(animeId_arr),
+	    timestamp: new Date().toISOString(),
+	    footer: {
+	    	text: 'Some footer text here',
+	    	icon_url: 'https://i.imgur.com/AfFp7pu.png',
+	    },
+    }
     return exampleEmbed;
 }
