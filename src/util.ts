@@ -121,11 +121,10 @@ const field_creator = async (animeId_arr: string[]) => {
     let fields = [];
 
     for (let id of animeId_arr) {
-        const data: any = getAnimeInfo(id);
-        console.log(data);
+        const data: any = await getAnimeInfo(id);
         fields.push({
-            name: data["data"]["title"],
-            value: data["data"]["source"],
+            name: data?.["data"]?.["data"]?.["title"],
+            value: data?.["data"]?.["data"]?.["source"],
             inline: true,
         });
     }

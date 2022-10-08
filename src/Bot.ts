@@ -70,8 +70,8 @@ client.on('interactionCreate', async (interaction: any) => {
                 break;
             case 'getanimeinfo':
                 message = await interaction.options.getString("myanimelistid");
-                await getAnimeInfo(message);
-                await interaction.reply("Information fetched!");
+                const res = await getAnimeInfo(message);
+                await interaction.reply(res?.["data"]?.["data"]?.["title"]);
                 break;
             case 'poll':
                 message = [];
@@ -81,7 +81,7 @@ client.on('interactionCreate', async (interaction: any) => {
                     if (temp == undefined) { break; };
                     message.push(temp);
                 }
-                await interaction.reply({ embeds: [ await poll(message)] });
+                await interaction.reply({ embeds: [ poll(message)] });
                 break;
         }
 });
