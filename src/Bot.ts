@@ -81,7 +81,7 @@ client.on('interactionCreate', async (interaction: any) => {
                     if (temp == undefined) { break; };
                     message.push(temp);
                 }
-                await interaction.reply({ embeds: [ poll(message)] });
+                await interaction.reply({ embeds: [ await poll(message)] });
                 break;
         }
 });

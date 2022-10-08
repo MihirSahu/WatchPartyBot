@@ -132,20 +132,19 @@ const field_creator = async (animeId_arr: string[]) => {
     return fields;
 }
 export const poll = async (animeId_arr: string[]) => {
-    const exampleEmbed = {
-        color: 0x0099ff,
-	    title: 'CougarCS Watch Party',
-	    author: {
+
+    const fields = await field_creator(animeId_arr);
+    const exampleEmbed = new EmbedBuilder()
+        .setColor(0x0099ff)
+        .setTitle("CougarCS Watch Party")
+        .setAuthor({
 	    	name: 'CougarCS Watch Party Bot',
-	    	icon_url: 'https://i.imgur.com/AfFp7pu.png',
+	    	iconURL: 'https://i.imgur.com/AfFp7pu.png',
 	    	url: 'https://discord.js.org',
-	    },
-	    fields: await field_creator(animeId_arr),
-	    timestamp: new Date().toISOString(),
-	    footer: {
-	    	text: 'Some footer text here',
-	    	icon_url: 'https://i.imgur.com/AfFp7pu.png',
-	    },
-    }
+	    })
+        .addFields(fields)
+        .setTimestamp()
+        .setFooter({ text: 'Some footer text here', iconURL: 'https://i.imgur.com/AfFp7pu.png' });
+
     return exampleEmbed;
 }
